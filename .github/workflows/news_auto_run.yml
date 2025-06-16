@@ -46,3 +46,13 @@ jobs:
         git add video_merge/combined_video.mp4
         git commit -m "자동 생성: $(date +'%Y-%m-%d %H:%M') 뉴스 동영상"
         git push
+        
+    - name: Commit and push result video
+      run: |
+        git config --global user.email "actions@github.com"
+        git config --global user.name "GitHub Actions"
+        git add video_merge/combined_video.mp4
+        git commit -m "자동 생성: $(date +'%Y-%m-%d %H:%M') 뉴스 동영상" || echo "No changes to commit"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
