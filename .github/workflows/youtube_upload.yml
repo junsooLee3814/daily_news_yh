@@ -24,7 +24,7 @@ jobs:
         run: echo "${{ secrets.YOUTUBE_CLIENT_SECRETS }}" | base64 -d > youtube_uploader/client_secrets.json
 
       - name: Restore token.json
-        run: echo "${{ secrets.YOUTUBE_TOKEN_JSON }}" > youtube_uploader/token.json
+        run: printf "%s" '${{ secrets.YOUTUBE_TOKEN_JSON }}' > youtube_uploader/token.json
 
       - name: Check token.json content
         run: cat youtube_uploader/token.json
