@@ -1,30 +1,27 @@
 import os
-import pickle
 import json
 from datetime import datetime
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
-# 유튜브 업로드에 필요한 인증 및 업로드 함수
 def get_authenticated_service():
     SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
     CLIENT_SECRETS_FILE = 'youtube_uploader/client_secrets.json'
-    flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
-    
+    TOKEN_FILE = 'youtube_uploader/token.json'
+
     credentials = None
-    if os.path.exists('youtube_credentials.pickle'):
-        with open('youtube_credentials.pickle', 'rb') as token:
-            credentials = pickle.load(token)
-    if not credentials or not credentials.valid:
-        if credentials and credentials.expired and credentials.refresh_token:
-            credentials.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
-            credentials = flow.run_local_server(port=0)
-        with open('youtube_credentials.pickle', 'wb') as token:
-            pickle.dump(credentials, token)
+    # token.json이 있으면 바로 사용
+    if os.path.exists(TOKEN_FILE):
+        credentials = Credentials.from_authorized_user_file(TOKEN_FILE, SCOPES)
+    else:
+        # 최초 인증(로컬에서만 사용, CI에서는 실행 안 됨)
+        from google_auth_oauthlib.flow import InstalledAppFlow
+        flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
+        credentials = flow.run_local_server(port=0)
+        # 인증 후 token.json 저장
+        with open(TOKEN_FILE, 'w') as token:
+            token.write(credentials.to_json())
     return build('youtube', 'v3', credentials=credentials)
 
 def upload_video(youtube, video_file, title, description, tags=None, categoryId="22", privacyStatus="private"):
@@ -76,4 +73,4 @@ if __name__ == "__main__":
             title,
             description,
             tags
-        ) 
+        )
