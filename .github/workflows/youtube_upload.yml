@@ -30,4 +30,4 @@ jobs:
         run: cat youtube_uploader/token.json
 
       - name: Upload to YouTube
-        run: python youtube_uploader/upload_to_youtube.py
+        run: python youtube_uploader/upload_to_youtube.py 
