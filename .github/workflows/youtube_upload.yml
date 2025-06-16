@@ -2,7 +2,7 @@ name: YouTube Upload
 
 on:
   schedule:
-    - cron: '30 22 * * *' # 매일 07:30 KST (UTC+9 → UTC 22:30 전날)
+    - cron: '30 22 * * *'
   workflow_dispatch:
 
 jobs:
@@ -19,15 +19,15 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r youtube_uploader/requirements_youtube.txt
-     
-      - name: Restore client_secrets.json
-        run: echo "${{ secrets.YOUTUBE_CLIENT_SECRETS }}" > youtube_uploader/client_secrets.json
 
       - name: Restore client_secrets.json
         run: echo "${{ secrets.YOUTUBE_CLIENT_SECRETS }}" | base64 -d > youtube_uploader/client_secrets.json
-  
+
+      - name: Restore token.json
+        run: echo "${{ secrets.YOUTUBE_TOKEN_JSON }}" | base64 -d > youtube_uploader/token.json
+
       - name: Check token.json content
         run: cat youtube_uploader/token.json
-      
+
       - name: Upload to YouTube
-        run: python youtube_uploader/upload_to_youtube.py 
+        run: python youtube_uploader/upload_to_youtube.py
