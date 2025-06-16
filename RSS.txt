@@ -1,0 +1,16 @@
+[RSS_URL 지정]
+https://www.yna.co.kr/rss/economy.xml
+https://www.yna.co.kr/rss/politics.xml
+
+[카드뉴스개수]
+카테고리별 카드뉴스 개수 : 10개, 최대 20개.
+
+[쿠팡파트너스]
+돌 스위티오 바나나 : https://link.coupang.com/a/ctQSUu
+
+[쿠팡파트너스 대가성문구]
+이 포스팅은 쿠팡파트너스 활동관련 일정보수를 제공받을수 있습니다. 위 이달의 추천상품 이용하세요.
+
+[동영상길이]
+카드뉴스별 동영상 길이 : 3초
+
