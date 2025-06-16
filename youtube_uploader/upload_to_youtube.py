@@ -10,8 +10,9 @@ from googleapiclient.http import MediaFileUpload
 # 유튜브 업로드에 필요한 인증 및 업로드 함수
 def get_authenticated_service():
     SCOPES = ['https://www.googleapis.com/auth/youtube.upload']
-    CLIENT_SECRETS_FILE = 'client_secrets.json'
-
+    CLIENT_SECRETS_FILE = 'youtube_uploader/client_secrets.json'
+    flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
+    
     credentials = None
     if os.path.exists('youtube_credentials.pickle'):
         with open('youtube_credentials.pickle', 'rb') as token:
