@@ -1,0 +1,26 @@
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Output and temp folders
+output/
+temp/
+
+# VSCode settings
+.vscode/
+
+# OS system files
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# 환경설정/민감정보
+youtube_credentials.pickle
+client_secrets.json
+
+# 기타
+*.log
