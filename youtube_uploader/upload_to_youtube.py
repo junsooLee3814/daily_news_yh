@@ -63,9 +63,9 @@ if __name__ == "__main__":
     else:
         # 2. 없으면 직접 값 생성해서 업로드
         today = datetime.now().strftime('%Y%m%d')
-        title = f"퀴즈#{today} 오늘퀴즈!!이 Shorts는 쿠팡파트너스 활동으로 일정보수를 지급받습니다"
-        description = "퀴즈로 뇌를 깨워보세요. 맞출 수 있을까요? 세대간 소통해요? 이 Shorts는 쿠팡파트너스 활동으로 일정보수를 지급받습니다"
-        tags = ["퀴즈", "교육", "상식", "게임", "문제풀이", "IQ", "재미", "학습"]
+        title = f"K-News#{today} 경제/정치/연합뉴스 60초요약!! 이 Shorts는 쿠팡파트너스 활동으로 일정보수를 지급받습니다"
+        description = "경제/정치/연합뉴스 60초요약!! 이 Shorts는 쿠팡파트너스 활동으로 일정보수를 지급받습니다"
+        tags = ["뉴스","시사","속보","헤드라인","이슈","트렌드","정치","경제"]
         video_file = 'video_merge/combined_video.mp4'  # 실제 동영상 경로에 맞게 수정
         upload_video(
             youtube,
