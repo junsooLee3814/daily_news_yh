@@ -1,6 +1,7 @@
 import os
 import pickle
 import json
+from datetime import datetime
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
@@ -47,16 +48,31 @@ def upload_video(youtube, video_file, title, description, tags=None, categoryId=
     print(f"Video uploaded: https://youtu.be/{response['id']}")
 
 if __name__ == "__main__":
-    # 예시: 메타데이터 파일에서 정보 읽기
-    with open('video_metadata.json', 'r', encoding='utf-8') as f:
-        meta = json.load(f)
     youtube = get_authenticated_service()
-    upload_video(
-        youtube,
-        meta['video_path'],
-        meta['title'],
-        meta['description'],
-        meta.get('tags', []),
-        categoryId="22",  # 22: People & Blogs, 24: Entertainment, 25: News & Politics 등
-        privacyStatus=meta.get('privacy_status', 'private')
-    )
+    # 1. video_metadata.json 파일이 있으면 우선 사용
+    if os.path.exists('video_metadata.json'):
+        with open('video_metadata.json', 'r', encoding='utf-8') as f:
+            meta = json.load(f)
+        upload_video(
+            youtube,
+            meta['video_path'],
+            meta['title'],
+            meta['description'],
+            meta.get('tags', []),
+            categoryId=meta.get('category', '22'),
+            privacyStatus=meta.get('privacy_status', 'private')
+        )
+    else:
+        # 2. 없으면 직접 값 생성해서 업로드
+        today = datetime.now().strftime('%Y%m%d')
+        title = f"퀴즈#{today} 오늘퀴즈!!이 Shorts는 쿠팡파트너스 활동으로 일정보수를 지급받습니다"
+        description = "퀴즈로 뇌를 깨워보세요. 맞출 수 있을까요? 세대간 소통해요? 이 Shorts는 쿠팡파트너스 활동으로 일정보수를 지급받습니다"
+        tags = ["퀴즈", "교육", "상식", "게임", "문제풀이", "IQ", "재미", "학습"]
+        video_file = 'video_merge/combined_video.mp4'  # 실제 동영상 경로에 맞게 수정
+        upload_video(
+            youtube,
+            video_file,
+            title,
+            description,
+            tags
+        ) 
