@@ -1,4 +1,4 @@
-name: News Auto Run
+name: youtube_upload
 
 on:
   schedule:
