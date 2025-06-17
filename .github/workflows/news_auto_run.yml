@@ -1,9 +1,9 @@
 name: News Auto Run
 
 on:
-  workflow_dispatch:  # 수동 실행
-  push:               # main 브랜치에 push될 때 자동 실행
-    branches: [ main ]
+  schedule:
+    - cron: '00 22 * * *' # 매일 오전 7시 KST (UTC+9 → UTC 22:00)
+  workflow_dispatch:
 
 jobs:
   build:
