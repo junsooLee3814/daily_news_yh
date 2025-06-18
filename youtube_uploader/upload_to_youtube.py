@@ -1,7 +1,8 @@
 import os
 import json
 from datetime import datetime
-import pytz  # 한국시간 처리를 위해 추가
+from zoneinfo import ZoneInfo  # Python 3.9 이상에서 사용
+
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
@@ -62,9 +63,8 @@ if __name__ == "__main__":
             privacyStatus=meta.get('privacy_status', 'private')
         )
     else:
-        # 2. 없으면 직접 값 생성해서 업로드 (한국시간 기준 today)
-        kst = pytz.timezone('Asia/Seoul')
-        today = datetime.now(kst).strftime('%Y%m%d')
+        # 2. 없으면 직접 값 생성해서 업로드 (한국시간 기준 today, zoneinfo 사용)
+        today = datetime.now(ZoneInfo('Asia/Seoul')).strftime('%Y%m%d')
         title = f"{today} [K-News] 60초요약_경제/정치/연합뉴스!!! 이 Shorts는 쿠팡파트너스 활동으로 일정보수를 지급받습니다."
         description = "[K-News] 60초요약_경제/정치/연합뉴스!!! 이 Shorts는 쿠팡파트너스 활동으로 일정보수를 지급받습니다."
         tags = ["뉴스","시사","속보","헤드라인","이슈","트렌드","정치","경제"]
